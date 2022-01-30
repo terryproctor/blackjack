@@ -1,4 +1,16 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# BlackJack Python Terminal game
+
+# In[1]:
+
+
 import random
+
+
+# In[2]:
+
 
 class Deck:
     def new_deck(self):
@@ -24,14 +36,19 @@ class Deck:
         self.cards.remove(selection)
         return selection
 
+
+# In[3]:
+
+
 class Player:
-    def __init__(self, chips=0, banker=False, cards=None, value=0, bust=False, blackjack= False):
+    def __init__(self, name, chips=0, banker=False, cards=None, value=0, bust=False, blackjack= False):
         self.chips = chips
         self.banker = banker
         self.cards = []
         self.value = value
         self.bust = bust
         self.blackjack = False
+        self.name = name
         
     def check_blackjack(self):
         if self.value == 21:
@@ -62,15 +79,21 @@ class Player:
         self.value = value
         print(f"New card: {card}, total: {self.value}")
         if self.check_bust():
+            
             print("You're bust!")
         return value
-    
+
+
+# In[13]:
+
+
 class Game:
     def __init__(self):
-        self.player1 = Player(chips=500)
-        self.banker = Player(banker=True)
+        self.player1 = Player(chips=500, name = "Player 1")
+        self.banker = Player(banker=True, name = "Dealer")
         self.card_deck = Deck()
-        
+        self.players = [self.player1, self.banker]
+    
     def deal_first_cards(self):
         for i in range(2):
             self.card_deck.deal_card(self.player1)
@@ -81,6 +104,7 @@ class Game:
             print("Player has Blackjack!")
         if self.banker.check_blackjack():
             print("Banker has Blackjack!")
+        
         self.display_cards()
             
     def display_cards(self):
@@ -100,26 +124,85 @@ class Game:
             if option == 'stick':
                 stick = True
         # banker's go
-        while player.value > self.banker.value:
-            self.card_deck.deal_card(self.banker)
-            self.banker.check_value()
-            if self.banker.value > player.value:
-                break
-            if self.banker.value == 21:
-                break
-            if self.banker.bust:
-                break
+        print("Dealer's go")
+        if player.bust == False:
+            while player.value > self.banker.value:
+                self.card_deck.deal_card(self.banker)
+                self.banker.check_value()
+                if self.banker.value == 21:
+                    print("Dealer sticks")
+                    break
+                if self.banker.bust:
+                    print("Dealer's bust")
+                    break
+                elif self.banker.value >= player.value:
+                    print("Dealer sticks")
+                    break
+    
+    def who_wins(self):
+        winning_score = 0
+        for player in self.players:
+            if player.bust == False and player.value > winning_score:
+                winning_score = player.value
+                winner = player
+        return winner
+    
+    def round_winner(self):
+        win = self.who_wins()
+        print(f"{win.name} wins!")
 
-#gameplay
+
+# In[14]:
+
+
 game = Game()
+
+
+# In[15]:
+
+
 game.deal_first_cards()
+
+
+# In[16]:
+
+
 game.turn(game.player1)
 
-#need to clean up
-game.player1.cards
-game.player1.check_value()
-game.player1.value
-game.banker.cards
+
+# In[17]:
+
+
+game.display_cards()
+
+
+# In[18]:
+
+
+for player in game.players:
+    print(player.value)
+
+
+# In[19]:
+
+
+game.round_winner()
+
+
+# In[20]:
+
+
+game.player1.bust
+
+
+# In[21]:
+
+
+game.banker.bust
+
+
+# In[ ]:
+
 
 
 
