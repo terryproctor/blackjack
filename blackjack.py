@@ -62,7 +62,6 @@ class Player:
         self.value = value
         print(f"New card: {card}, total: {self.value}")
         if self.check_bust():
-            
             print("You're bust!")
         return value
     
@@ -72,7 +71,6 @@ class Game:
         self.banker = Player(banker=True)
         self.card_deck = Deck()
         
-    
     def deal_first_cards(self):
         for i in range(2):
             self.card_deck.deal_card(self.player1)
@@ -83,7 +81,6 @@ class Game:
             print("Player has Blackjack!")
         if self.banker.check_blackjack():
             print("Banker has Blackjack!")
-        
         self.display_cards()
             
     def display_cards(self):
@@ -113,7 +110,7 @@ class Game:
             if self.banker.bust:
                 break
 
-
+#gameplay
 game = Game()
 game.deal_first_cards()
 game.turn(game.player1)
