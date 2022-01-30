@@ -1,16 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# BlackJack Python Terminal game
-
-# In[1]:
-
-
 import random
-
-
-# In[2]:
-
 
 class Deck:
     def new_deck(self):
@@ -35,10 +23,6 @@ class Deck:
         player.cards.append(selection)
         self.cards.remove(selection)
         return selection
-
-
-# In[3]:
-
 
 class Player:
     def __init__(self, chips=0, banker=False, cards=None, value=0, bust=False, blackjack= False):
@@ -82,11 +66,6 @@ class Player:
             print("You're bust!")
         return value
     
-
-
-# In[4]:
-
-
 class Game:
     def __init__(self):
         self.player1 = Player(chips=500)
@@ -135,50 +114,15 @@ class Game:
                 break
 
 
-# In[5]:
-
-
 game = Game()
-
-
-# In[6]:
-
-
 game.deal_first_cards()
-
-
-# In[7]:
-
-
 game.turn(game.player1)
 
-
-# In[8]:
-
-
+#need to clean up
 game.player1.cards
-
-
-# In[9]:
-
-
 game.player1.check_value()
-
-
-# In[10]:
-
-
 game.player1.value
-
-
-# In[11]:
-
-
 game.banker.cards
-
-
-# In[ ]:
-
 
 
 
